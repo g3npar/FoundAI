@@ -1,45 +1,46 @@
-"""Insta485 model (database) API."""
-import sqlite3
 import flask
+from flask import Flask, request, jsonify
+import os
 import FoundAI
+import pymongo
+import json
+
+from pymongo import MongoClient
+
+uri = os.getenv('MONGODB_KEY')
+
+cluster = MongoClient(uri)
+db = cluster["foundai"]
+found_collection = db["found"]
+lost_collection = db["lost"]
 
 
-def dict_factory(cursor, row):
-    """Convert database row objects to a dictionary keyed on column name.
+@FoundAI.app.route('/api/get_found', methods=['GET'])
+def get_found():
+    documents = list(found_collection.find({})) #Finds all of the stuff in found
+    documents = json.loads(json.dumps(documents, default=str))
+    return jsonify(documents)
 
-    This is useful for building dictionaries which are then used to render a
-    template.  Note that this would be inefficient for large queries.
-    """
-    return {col[0]: row[idx] for idx, col in enumerate(cursor.description)}
+@FoundAI.app.route('/api/get_lost', methods=['GET'])
+def get_lost():
+    documents = list(lost_collection.find({})) #Finds all of the stuff in found
+    documents = json.loads(json.dumps(documents, default=str))
+    return jsonify(documents)
 
+@FoundAI.app.route('/api/insert_found', methods=['POST'])
+def insert_found():
+    data = request.json
+    result = found_collection.insert_one(data)
+    return jsonify({
+        'message': 'Data inserted successfully!',
+        'inserted_id': str(result.inserted_id)
+    }), 201
 
-def get_db():
-    """Open a new database connection.
-
-    Flask docs:
-    https://flask.palletsprojects.com/en/1.0.x/appcontext/#storing-data
-    """
-    if 'sqlite_db' not in flask.g:
-        db_filename = FoundAI.app.config['DATABASE_FILENAME']
-        flask.g.sqlite_db = sqlite3.connect(str(db_filename))
-        flask.g.sqlite_db.row_factory = dict_factory
-
-        # Foreign keys have to be enabled per-connection.  This is an sqlite3
-        # backwards compatibility thing.
-        flask.g.sqlite_db.execute("PRAGMA foreign_keys = ON")
-
-    return flask.g.sqlite_db
-
-
-@FoundAI.app.teardown_appcontext
-def close_db(error):
-    """Close the database at the end of a request.
-
-    Flask docs:
-    https://flask.palletsprojects.com/en/1.0.x/appcontext/#storing-data
-    """
-    assert error or not error  # Needed to avoid superfluous style error
-    sqlite_db = flask.g.pop('sqlite_db', None)
-    if sqlite_db is not None:
-        sqlite_db.commit()
-        sqlite_db.close()
+@FoundAI.app.route('/api/insert_lost', methods=['POST'])
+def insert_lost():
+    data = request.json
+    result = lost_collection.insert_one(data)
+    return jsonify({
+        'message': 'Data inserted successfully!',
+        'inserted_id': str(result.inserted_id)
+    }), 201
