@@ -1,14 +1,20 @@
 import { Input, InputGroup, InputRightElement } from "@chakra-ui/react";
-import { SearchIcon } from "@chakra-ui/icons";
+import { SearchIcon, AddIcon } from "@chakra-ui/icons";
 import { useEffect, useState } from "react";
+import { FileUpload } from 'primereact/fileupload';
+
+
 import Navbar from "./Navbar";
 import "./styles.css";
 
 export default function Landing() {
   const [search, setSearch] = useState("");
+  const [uploadIsOpen, setUploadIsOpen] = useState(false);
+
   useEffect(() => {
     console.log(search);
-  }, [search]);
+    console.log(uploadIsOpen);
+  }, [search, uploadIsOpen]);
   return (
     <>
       <Navbar />
@@ -27,13 +33,23 @@ export default function Landing() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
-              <InputRightElement justifyContent={"center"} pr={10} pt={20}>
-                <SearchIcon color="gray.300" />
+              <InputRightElement gap={20} justifyContent={"center"} pr={10} pt={20}>
+                <AddIcon color="gray.300" onClick={(e) => setUploadIsOpen(true)}/>
+                <SearchIcon color="gray.300"/>
               </InputRightElement>
             </InputGroup>
+            
           </div>
         </div>
       </div>
+      {uploadIsOpen &&
+        <div className="upload-image-container">
+          <div className="upload-image">
+            <input className="custom-file-input" type="file"/>
+            <button onClick={(e) => setUploadIsOpen(false)}>X</button>
+          </div>
+        </div>
+      }
     </>
   );
 }

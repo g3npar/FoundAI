@@ -29,3 +29,35 @@
     height: 30px;
 
 }
+
+.upload-image-container{
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0px;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.upload-image{
+    width: 40%;
+    height: 40%;
+    display: flex;
+    background-color: #808080d8;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+.custom-file-input::-webkit-file-upload-button {
+    visibility: hidden;
+}
+.custom-file-input{
+    display: flex;
+    flex-direction: column;
+    font-family: "Nunito Sans";
+    padding: 5px;
+    font-size: 40px;
+
+}
