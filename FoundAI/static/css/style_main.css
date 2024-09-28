@@ -1,0 +1,89 @@
+/* . {
+     box-sizing: border-box; 
+} */
+
+html, body {
+    padding: 0px;
+    margin: 0px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    border: solid;
+}
+.header {
+    height: 10vh;
+    margin: 0% 5% 5% 5%;
+    display: flex;
+    justify-content: space-between;
+    border: solid;
+}
+
+.header .logo {
+    height: 100%;
+}
+
+.header .buttons {
+    align-self: center;
+    border: solid;
+    width: 15%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.body {
+    height: auto;
+    margin: 0% 10% 0% 10%;
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
+}
+
+.body .post {
+    height: auto;
+    border: solid;
+    margin-bottom: 3%;
+}
+
+.body .post .top {
+    height: 120px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0% 3% 0% 3%;
+}
+
+.body .post .top a {
+    height: 50%;
+    display: flex;
+    align-items: center;
+}
+
+.body .post .top a img {
+    height: 100%;
+}
+
+.body .post .middle {
+    height: auto;
+}
+
+.body .post .middle img {
+    width: 100%;
+}
+
+.body .post .bottom {
+    height: auto;
+    padding: 1%;
+}
+
+.body .post .bottom .comments {
+    line-height: 3;
+}
