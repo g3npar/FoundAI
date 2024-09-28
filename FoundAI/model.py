@@ -44,15 +44,3 @@ def insert_lost():
         'message': 'Data inserted successfully!',
         'inserted_id': str(result.inserted_id)
     }), 201
-
-"""
-
-@FoundAI.app.teardown_appcontext
-def close_db(error):
-
-    assert error or not error  # Needed to avoid superfluous style error
-    sqlite_db = flask.g.pop('sqlite_db', None)
-    if sqlite_db is not None:
-        sqlite_db.commit()
-        sqlite_db.close()
-"""
