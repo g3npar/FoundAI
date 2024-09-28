@@ -10,7 +10,7 @@ app.config.from_object('FoundAI.config')
 # Overlay settings read from a Python file whose path is set in the environment
 # variable. Setting this environment variable is optional.
 # Docs: http://flask.pocoo.org/docs/latest/config/
-# app.config.from_envvar('INSTA485_SETTINGS', silent=True)
+app.config.from_envvar('INSTA485_SETTINGS', silent=True)
 
 # Tell our app about views and model.  This is dangerously close to a
 # circular import, which is naughty, but Flask was designed that way.

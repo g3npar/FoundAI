@@ -1,4 +1,4 @@
-"""Insta485 development configuration."""
+"""FoundAI development configuration."""
 
 import pathlib
 
