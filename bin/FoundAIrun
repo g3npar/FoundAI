@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -Eeuo pipefail
+
+if [ ! -f "var/FoundAI.sqlite3" ]; then
+    echo "Error: database does not exist"
+    exit 1
+fi
+
+flask --app FoundAI --debug run --host 0.0.0.0 --port 8000
