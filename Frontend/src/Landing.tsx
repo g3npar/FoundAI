@@ -6,22 +6,38 @@ import { FileUpload } from "primereact/fileupload";
 import "./styles.css";
 import "./navbar.css";
 import AddPost from "./AddPost";
+import axios from "axios";
 
 export default function Landing() {
-  const [search, setSearch] = useState("");
+  axios.defaults.withCredentials = true;
+
+  const [searchText, setSearchText] = useState({
+    searchText: "",
+  });
   const [uploadIsOpen, setUploadIsOpen] = useState(false);
   const [addPostIsOpen, setAddPostIsOpen] = useState(false);
 
   useEffect(() => {
-    console.log(search);
+    console.log(searchText);
     console.log(uploadIsOpen);
-  }, [search, uploadIsOpen]);
+  }, [searchText, uploadIsOpen]);
+
+  const handleSearch = async () => {
+    try {
+      await axios
+        .post("http://127.0.0.1:8000/api/search_text_lost", searchText)
+        .then((response) => console.log(response.data));
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <>
       <div className="navbar-container">
         <div className="navbar-logo">FoundAI</div>
         <div className="navbar-pages">
-          <div className="navbar-btn">
+          <div onClick={(e)=>setAddPostIsOpen(true)} className="navbar-btn">
             Post
             <AddIcon color="gray.300" onClick={(e) => setAddPostIsOpen(true)} />
           </div>
@@ -39,8 +55,8 @@ export default function Landing() {
                 h="50px"
                 pl={10}
                 borderRadius={5}
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                value={searchText.searchText}
+                onChange={(e) => setSearchText({ searchText: e.target.value })}
               />
               <InputRightElement
                 gap={20}
@@ -52,7 +68,7 @@ export default function Landing() {
                   color="gray.300"
                   onClick={(e) => setUploadIsOpen(true)}
                 />
-                <SearchIcon color="gray.300" />
+                <SearchIcon color="gray.300" onClick={handleSearch} />
               </InputRightElement>
             </InputGroup>
           </div>

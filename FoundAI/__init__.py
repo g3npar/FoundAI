@@ -3,7 +3,8 @@ import flask
 from flask_cors import CORS
 # app is a single object used by all the code modules in this package
 app = flask.Flask(__name__)  # pylint: disable=invalid-name
-CORS(app)
+CORS(app, supports_credentials=True)
+
 app.config['CORS_HEADERS'] = 'Content-Type'
 # Read settings from config module (insta485/config.py)
 app.config.from_object('FoundAI.config')
