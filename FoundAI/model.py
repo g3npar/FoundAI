@@ -20,8 +20,18 @@ from PIL import Image
 from scipy.spatial.distance import cosine
 from bson import ObjectId, json_util
 
+uri = os.getenv('MONGODB_KEY')
+cluster = MongoClient(uri)
+db = cluster["foundai"]
+found_collection = db["found"]
+lost_collection = db["lost"]
 
-S3_SECRET_KEY = "u9FdWUgR0loNEqCC3z/X17Vpr2/7ZUISlEH1bMbN"
+
+S3_BUCKET = os.getenv('S3_BUCKET')
+S3_REGION = os.getenv('S3_REGION')
+S3_ACCESS_KEY = os.getenv('S3_ACCESS_KEY')
+S3_SECRET_KEY = os.getenv('S3_SECRET_KEY')
+
 uri = os.getenv('MONGODB_KEY')
 cluster = MongoClient(uri)
 db = cluster["foundai"]
