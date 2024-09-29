@@ -16,6 +16,10 @@ found_collection = db["found"]
 lost_collection = db["lost"]
 
 
+# Ensure Text Index exists
+lost_collection.create_index([('title', 'text'), ('description', 'text')])
+found_collection.create_index([('title', 'text'), ('description', 'text')])
+
 S3_BUCKET = os.getenv('S3_BUCKET')
 S3_REGION = os.getenv('S3_REGION')
 S3_ACCESS_KEY = os.getenv('S3_ACCESS_KEY')
@@ -126,3 +130,27 @@ def upload_lost():
 
         except Exception as e:
             return jsonify({'error': str(e)}), 500
+
+@FoundAI.app.route('/api/search_text_found', methods=['GET'])
+def search_found_posts():
+    # Perform text search and sort by relevance
+    query = request.json['searchText']
+    results = found_collection.find(
+        {'$text': {'$search': query}},
+        {'score': {'$meta': 'textScore'}}
+    ).sort([('score', {'$meta': 'textScore'})])
+    documents = list(results)
+    documents = json.loads(json.dumps(documents, default=str))
+    return jsonify(documents)
+
+@FoundAI.app.route('/api/search_text_lost', methods=['GET'])
+def search_found_posts():
+    # Perform text search and sort by relevance
+    query = request.json['searchText']
+    results = lost_collection.find(
+        {'$text': {'$search': query}},
+        {'score': {'$meta': 'textScore'}}
+    ).sort([('score', {'$meta': 'textScore'})])
+    documents = list(results)
+    documents = json.loads(json.dumps(documents, default=str))
+    return jsonify(documents)
