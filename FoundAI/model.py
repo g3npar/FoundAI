@@ -55,74 +55,6 @@ def insert_lost():
         'inserted_id': str(result.inserted_id)
     }), 201
     
-    
-
-@FoundAI.app.route('/api/upload_found', methods=['POST'])
-def upload_found():
-    if 'file' not in request.files:
-        return jsonify({'error': 'No file part in the request'}), 400
-
-    file = request.files['file']
-
-    if file.filename == '':
-        return jsonify({'error': 'No file selected'}), 400
-
-    if file:
-        # Secure the filename
-        filename = secure_filename(file.filename)
-        s3_folder = "found/"
-        s3_key = f"{s3_folder}{filename}"
-
-        try:
-            # Upload file to S3
-            s3.upload_fileobj(
-                file,
-                S3_BUCKET,
-                s3_key,
-                ExtraArgs={"ACL": "public-read", "ContentType": file.content_type}
-            )
-
-            # Generate S3 file URL
-            s3_url = f"https://{S3_BUCKET}.s3.{S3_REGION}.amazonaws.com/{filename}"
-
-            return jsonify({'message': 'File uploaded successfully!', 's3_url': s3_url}), 201
-
-        except Exception as e:
-            return jsonify({'error': str(e)}), 500
-        
-@FoundAI.app.route('/api/upload_found', methods=['POST'])
-def upload_lost():
-    if 'file' not in request.files:
-        return jsonify({'error': 'No file part in the request'}), 400
-
-    file = request.files['file']
-
-    if file.filename == '':
-        return jsonify({'error': 'No file selected'}), 400
-
-    if file:
-        # Secure the filename
-        filename = secure_filename(file.filename)
-        s3_folder = "found/"
-        s3_key = f"{s3_folder}{filename}"
-
-        try:
-            # Upload file to S3
-            s3.upload_fileobj(
-                file,
-                S3_BUCKET,
-                s3_key,
-                ExtraArgs={"ACL": "public-read", "ContentType": file.content_type}
-            )
-
-            # Generate S3 file URL
-            s3_url = f"https://{S3_BUCKET}.s3.{S3_REGION}.amazonaws.com/{filename}"
-
-            return jsonify({'message': 'File uploaded successfully!', 's3_url': s3_url}), 201
-
-        except Exception as e:
-            return jsonify({'error': str(e)}), 500
-        
         
 @FoundAI.app.route('/api/upload_found', methods=['POST'])
 def upload_found():
@@ -150,7 +82,7 @@ def upload_found():
             )
 
             # Generate S3 file URL
-            s3_url = f"https://{S3_BUCKET}.s3.{S3_REGION}.amazonaws.com/{filename}"
+            s3_url = f"https://{S3_BUCKET}.s3.{S3_REGION}.amazonaws.com/{s3_key}"
 
             return jsonify({'message': 'File uploaded successfully!', 's3_url': s3_url}), 201
 
@@ -183,7 +115,7 @@ def upload_lost():
             )
 
             # Generate S3 file URL
-            s3_url = f"https://{S3_BUCKET}.s3.{S3_REGION}.amazonaws.com/{filename}"
+            s3_url = f"https://{S3_BUCKET}.s3.{S3_REGION}.amazonaws.com/{s3_key}"
 
             return jsonify({'message': 'File uploaded successfully!', 's3_url': s3_url}), 201
 
