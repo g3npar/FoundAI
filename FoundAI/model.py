@@ -4,16 +4,14 @@ import os
 import FoundAI
 import pymongo
 import json
-
 from pymongo import MongoClient
 
 uri = os.getenv('MONGODB_KEY')
 
-cluster = MongoClient(uri)
+cluster = MongoClient("mongodb+srv://dbUser:yL51I81EjJTyn1CE@cluster0.ztuqg.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 db = cluster["foundai"]
 found_collection = db["found"]
 lost_collection = db["lost"]
-
 
 @FoundAI.app.route('/api/get_found', methods=['GET'])
 def get_found():

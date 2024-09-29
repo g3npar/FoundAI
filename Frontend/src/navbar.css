@@ -42,11 +42,16 @@
 }
 
 .navbar-btn{
-    width: 200px;
+    width: 100px;
     padding: 10px;
     box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: black;
+    color: white;
+    border-radius: 5px;
+    font-size: 15px;
+    gap: 15px;
 
 }

@@ -11,13 +11,7 @@ export default function Navbar() {
             to={"/dashboard/"}
             style={{ textDecoration: "inherit", color: "inherit" }}
           >
-            <div className="navbar-btn">Found Something?</div>
-          </Link>
-          <Link
-            to={"/dashboard/"}
-            style={{ textDecoration: "inherit", color: "inherit" }}
-          >
-            <div className="navbar-btn">Lost Something?</div>{" "}
+            <div className="navbar-btn">Post</div>
           </Link>
         </div>
       </div>

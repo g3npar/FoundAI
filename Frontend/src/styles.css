@@ -39,25 +39,74 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: #c3ddffe7;
 }
 
 .upload-image{
     width: 40%;
     height: 40%;
     display: flex;
-    background-color: #808080d8;
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
 }
-.custom-file-input::-webkit-file-upload-button {
-    visibility: hidden;
-}
-.custom-file-input{
-    display: flex;
-    flex-direction: column;
-    font-family: "Nunito Sans";
-    padding: 5px;
-    font-size: 40px;
 
+label {
+    width: 500px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: row;
+    gap: 20px;
+    cursor: pointer;
+    font-size: 30px;
+    background-color: rgb(10, 43, 68);
+    border-radius: 5px;
+    padding: 10px;
+}
+  
+label h2 {
+    color: white;
+    font-family: "Nunito Sans";
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+  
+.upload__icon {
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(20, 63, 95);
+    font-family: "Nunito Sans";
+}
+  
+label p {
+    font-family: "Nunito Sans";
+    font-size: 14px;
+    color: rgb(10, 52, 85);
+}
+  
+.custom-file-input{
+    display: none;
+}
+
+.file-submit{
+    background-color: transparent;
+    border: none;
+    font-size: 25px;
+    color: white;
+}
+
+
+.add-post-container{
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
