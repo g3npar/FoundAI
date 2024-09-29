@@ -4,6 +4,8 @@ arrow==1.3.0
 astroid==3.2.4
 beautifulsoup4==4.12.3
 blinker==1.8.2
+boto3==1.35.29
+botocore==1.35.29
 bs4==0.0.2
 certifi==2024.8.30
 charset-normalizer==3.3.2
@@ -14,7 +16,7 @@ email_validator==2.2.0
 fastapi==0.115.0
 fastapi-cli==0.0.5
 Flask==3.0.3
--e git+https://github.com/g3npar/LostAndFound.git@552c57cb1d29e52d75ddce9b0b1b10d4e7bdce56#egg=FoundAI
+-e git+https://github.com/g3npar/LostAndFound.git@ffc037874a6e401596fc289fbdc72fcd02266a45#egg=FoundAI
 h11==0.14.0
 httpcore==1.0.5
 httptools==0.6.1
@@ -24,6 +26,7 @@ iniconfig==2.0.0
 isort==5.13.2
 itsdangerous==2.2.0
 Jinja2==3.1.4
+jmespath==1.0.1
 markdown-it-py==3.0.0
 MarkupSafe==2.1.5
 mccabe==0.7.0
@@ -44,6 +47,7 @@ python-multipart==0.0.11
 PyYAML==6.0.2
 requests==2.32.3
 rich==13.8.1
+s3transfer==0.10.2
 shellingham==1.5.4
 six==1.16.0
 sniffio==1.3.1

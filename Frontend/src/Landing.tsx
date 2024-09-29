@@ -19,7 +19,7 @@ export default function Landing() {
   return (
     <>
       <div className="navbar-container">
-        <div className="navbar-logo">FindAI</div>
+        <div className="navbar-logo">FoundAI</div>
         <div className="navbar-pages">
           <div className="navbar-btn">
             Post

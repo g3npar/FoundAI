@@ -14,6 +14,7 @@ export default function AddPost() {
     picture: "",
   });
   const [selectedFile, setSelectedFile] = useState(null);
+  const [imageIsUploaded, setImageIsUploaded] = useState(false);
 
   const handleChange = (e) => {
     setPost((prev) => ({
@@ -26,15 +27,7 @@ export default function AddPost() {
     setPostType(e.target.value);
   };
 
-  const addPost = async (e) => {
-    try {
-      await axios.post("http://127.0.0.1:8000/api/" + postType, post);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
     setSelectedFile(e.target.files[0]);
   };
 
@@ -43,18 +36,44 @@ export default function AddPost() {
     e.preventDefault();
     if (!selectedFile) return;
 
-    const formData = new FormData();
+    const formData = new FormData(undefined);
     formData.append("file", selectedFile);
     console.log(formData);
+
     try {
-      await axios.post("http://127.0.0.1:8000/api/upload_found", {
-        method: "POST",
-        body: formData,
-      });
+      await axios
+        .post(
+          "http://127.0.0.1:8000/api/upload_" + postType.split("_")[1],
+          formData
+        )
+        .then((response) => {
+          setPost((prev) => ({
+            ...prev,
+            picture: response.data.s3_url,
+          }));
+          console.log(response);
+          setImageIsUploaded(!imageIsUploaded);
+        });
     } catch (err) {
-      console.error("Error uploading file:", err);
+      console.log(err);
     }
   };
+
+  useEffect(() => {
+    console.log(post);
+  }, [post]);
+
+  useEffect(() => {
+    const addPost = async () => {
+      try {
+        await axios.post("http://127.0.0.1:8000/api/" + postType, post);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    addPost();
+  }, [imageIsUploaded]);
 
   return (
     <>
@@ -123,12 +142,9 @@ export default function AddPost() {
               type="file"
               name="picture"
               placeholder="Picture"
-              value={post.picture}
               onChange={handleFileChange}
             />
-            <button type="submit" onClick={addPost}>
-              Add Post
-            </button>
+            <button type="submit">Add Post</button>
           </form>
         </div>
       </div>
