@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import "./addpost.css";
+import FileUploadIcon from "@mui/icons-material/FileUpload";
+import { useNavigate, Link, redirect } from "react-router-dom";
+import { ArrowBackIcon, AddIcon } from "@chakra-ui/icons";
 
 export default function AddPost() {
   const [postType, setPostType] = useState("insert_found"); // true: found , false: lost
@@ -33,12 +37,12 @@ export default function AddPost() {
 
   const handleSubmit = async (e) => {
     console.log(selectedFile);
-    e.preventDefault();
     if (!selectedFile) return;
-
+    e.preventDefault();
     const formData = new FormData(undefined);
     formData.append("file", selectedFile);
     console.log(formData);
+    console.log(postType);
 
     try {
       await axios
@@ -60,91 +64,142 @@ export default function AddPost() {
   };
 
   useEffect(() => {
-    console.log(post);
-  }, [post]);
-
-  useEffect(() => {
-    const addPost = async () => {
+    const makePost = async () => {
+      if(post.title == "") return
       try {
         await axios.post("http://127.0.0.1:8000/api/" + postType, post);
       } catch (err) {
         console.log(err);
       }
     };
+    console.log(post);
 
-    addPost();
+    makePost();
   }, [imageIsUploaded]);
+
+  // useEffect(() => {
+  //   const addPost = async () => {
+  //     try {
+  //       await axios.post("http://127.0.0.1:8000/api/" + postType, post);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   };
+
+  //   addPost();
+  // }, [imageIsUploaded]);
 
   return (
     <>
+      <div className="navbar-container">
+        <div className="navbar-logo">FoundAI</div>
+        <div className="navbar-pages">
+          <div className="navbar-btn">
+            <Link to={"/"}>Post</Link>
+            <AddIcon color="gray.300" />
+          </div>
+        </div>
+      </div>
       <div className="add-post-container">
-        <h1>Add Post</h1>
-        <div>
-          <form onSubmit={handleSubmit}>
-            <select
-              className="table-value"
-              name="type"
-              onChange={(e) => handleChangePostType(e)}
-            >
-              <option value="insert_found">Found Item</option>
-              <option value="insert_lost">Lost Item</option>
-            </select>
-            <input
-              type="text"
-              name="title"
-              placeholder="Title"
-              value={post.title}
-              onChange={handleChange}
-            />
-            <input
-              type="text"
-              name="description"
-              placeholder="Description"
-              value={post.description}
-              onChange={handleChange}
-            />
-            <input
-              type="text"
-              name="email"
-              placeholder="Email"
-              value={post.email}
-              onChange={handleChange}
-            />
-            <input
-              type="text"
-              name="number"
-              placeholder="Number"
-              value={post.number}
-              onChange={handleChange}
-            />
-            <input
-              type="text"
-              name="location"
-              placeholder="Location"
-              value={post.location}
-              onChange={handleChange}
-            />
-            <input
-              type="date"
-              name="date"
-              placeholder="Date"
-              value={post.date}
-              onChange={handleChange}
-            />
-            <input
-              type="time"
-              name="time"
-              placeholder="Time"
-              value={post.time}
-              onChange={handleChange}
-            />
-            <input
-              type="file"
-              name="picture"
-              placeholder="Picture"
-              onChange={handleFileChange}
-            />
-            <button type="submit">Add Post</button>
+        <div className="add-post">
+          <div className="close-add-post">
+            <Link to={"/"}>
+              <ArrowBackIcon />
+            </Link>
+          </div>
+          <h1>Add Post</h1>
+          <form onSubmit={handleSubmit} className="inputs">
+            <div className="row">
+              <select
+                className="select"
+                name="type"
+                onChange={(e) => handleChangePostType(e)}
+              >
+                <option value="insert_found">Found Item</option>
+                <option value="insert_lost">Lost Item</option>
+              </select>
+              <input
+                className="title-input"
+                type="text"
+                name="title"
+                placeholder="Title"
+                value={post.title}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="row">
+              <textarea
+                className="description-input"
+                name="description"
+                placeholder="Description"
+                value={post.description}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="row">
+              <input
+                className="email-input"
+                type="text"
+                name="email"
+                placeholder="Email"
+                value={post.email}
+                onChange={handleChange}
+              />
+              <input
+                className="number-input"
+                type="text"
+                name="number"
+                placeholder="Number"
+                value={post.number}
+                onChange={handleChange}
+              />
+              <input
+                className="location-input"
+                type="text"
+                name="location"
+                placeholder="Location"
+                value={post.location}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="row">
+              <input
+                className="date-input"
+                type="date"
+                name="date"
+                placeholder="Date"
+                value={post.date}
+                onChange={handleChange}
+              />
+              <input
+                className="time-input"
+                type="time"
+                name="time"
+                placeholder="Time"
+                value={post.time}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="row">
+              <label className="file-label" htmlFor="file-input">
+                Upload File
+                <FileUploadIcon />
+              </label>
+              <input
+                hidden
+                id="file-input"
+                className="file-input"
+                type="file"
+                name="picture"
+                placeholder="Picture"
+                onChange={handleFileChange}
+              />
+            </div>
+            <div className="row">
+              <button className="btn-submit" type="submit">
+                Add Post
+              </button>
+            </div>
           </form>
         </div>
       </div>

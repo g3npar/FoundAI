@@ -1,14 +1,24 @@
 """FoundAI package initializer."""
 import flask
 from flask_cors import CORS
+from bson import ObjectId
+import json
+
+
 # app is a single object used by all the code modules in this package
 app = flask.Flask(__name__)  # pylint: disable=invalid-name
+
+class MongoJSONEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, ObjectId):
+            return str(obj)
+        return json.JSONEncoder.default(self, obj)
+
 CORS(app, supports_credentials=True)
 
 app.config['CORS_HEADERS'] = 'Content-Type'
 # Read settings from config module (insta485/config.py)
 app.config.from_object('FoundAI.config')
-
 # Overlay settings read from a Python file whose path is set in the environment
 # variable. Setting this environment variable is optional.
 # Docs: http://flask.pocoo.org/docs/latest/config/

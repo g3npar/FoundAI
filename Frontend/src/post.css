@@ -1,5 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
 
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.wrapper{
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-sizing: border-box;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+}
 .post{
-    border: 1px solid black;
-    padding: 10px;
+    width: 90%;
+    height: 300px;
+    display: flex;
+    border: 3px solid rgba(174, 174, 174, 0.169);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 30px 60px;
+    justify-content: space-around;
+    box-sizing: border-box;
+    margin: 10px;
+    overflow-x: hidden;
+    border-radius: 10px;
+    
+}
+
+.post-title{
+    font-size: 30px;
+    font-family: "Nunito Sans";
+}
+
+.post-picture img{
+    width: 200px;
+    height: 200px;
+}
+
+.post-description{
+    font-size: 20px;
+    font-family: "Nunito Sans";
+}
+
+.col-description{
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    background-color: rgb(243, 242, 242);
+    width: 100%;
+    height: 200px;
+    margin: 50px;
+    display: flex;
+    align-items:first baseline;
+    text-align: justify;
+    padding-left: 30px;
+    padding-right: 20px;
+    padding-top: 40px;
+    border-radius: 5px;
+
+}
+
+.col-info{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    font-size: 20px;
+    font-family: "Nunito Sans";
+    justify-content: center;
+    background-color: #d6f9ed;
+    padding: 30px;
+    border-radius: 5px;
+}
+
+.col-title{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
 }

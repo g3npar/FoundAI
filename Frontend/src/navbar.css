@@ -53,5 +53,8 @@
     border-radius: 5px;
     font-size: 15px;
     gap: 15px;
+}
 
+.navbar-btn a{
+    color: white;
 }
