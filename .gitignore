@@ -1,5 +1,5 @@
 # Python
-views/config.py/
+FoundAI/config.py/
 *.pyc
 __pycache__/
 *.egg-info*
