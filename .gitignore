@@ -1,5 +1,5 @@
 # Python
-views/config.py
+views/config.py/
 *.pyc
 __pycache__/
 *.egg-info*
